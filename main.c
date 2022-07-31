@@ -54,9 +54,6 @@ int main(){
 
     struct pixel *head = (pixel *) malloc(sizeof(pixel));
     
-    
-
-
     addPixel(10, 9, '#', head);
     addPixel(11, 9, '#', head);
     addPixel(12, 9, '#', head);
@@ -69,9 +66,6 @@ int main(){
     addPixel(11, 11, '#', head);
     addPixel(12, 11, '#', head);
     
-    
-
-
     
     for(int x=0; x!=6; x++){
         system("clear");
@@ -93,29 +87,22 @@ void frame(struct pixel *pixels){
 
     termnialSize(&lines, &col);
     
-
-
     for(int i=0; i!= lines; i++){
         for(int x=0; x!= col-1; x++){
 
             pixel *current = pixels;
             found=0;
             while(current != NULL){
-
                 if(current->x == coodX+1 && current->y == coodY+1){
                     printf("%c", current->content);
                     found = 1;
                 }
-
                 current = current->next;
-
             }
             if(found == 0 ){
                 printf(" ");
                 found = 1;
             }
-
-            
             coodX++;
         }
         printf(" \n");
