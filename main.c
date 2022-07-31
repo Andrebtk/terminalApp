@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 
-
 typedef struct pixel{
     int x;
     int y;
