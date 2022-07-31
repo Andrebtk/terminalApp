@@ -3,6 +3,8 @@
 #include <sys/ioctl.h>
 #include <stdlib.h>
 
+
+
 typedef struct pixel{
     int x;
     int y;
@@ -10,48 +12,19 @@ typedef struct pixel{
     struct pixel *next;
 }pixel;
 
+
 void frame(struct pixel *pixels);
 void termnialSize(int *lines, int *col);
+void addPixel(int x, int y, char content, struct pixel *head);
+void speed(struct pixel *head);
 
 //printf("\e[?25l"); // disable cursor
 //printf("\e[?25h");  //  enable cursor
 
 
-
-void addPixel(int x, int y, char content, struct pixel *head){
-    
-
-    pixel *current = head;
-    
-    while(current->next != NULL){
-        current = current->next;
-    }
-    
-
-    current->next = (pixel *) malloc(sizeof(pixel));
-
-    current->next->x = x;
-    current->next->y = y;
-    current->next->content = content;
-
-    current->next->next = NULL;   
-    
-   
-}
-
-void speed(struct pixel *head){
-    pixel *current = head;
-
-    while(current != NULL){
-        current->x++;
-        current = current->next;
-    }
-}
-
 int main(){
     printf("\e[?25l");
     
-
     struct pixel *head = (pixel *) malloc(sizeof(pixel));
     
     addPixel(10, 9, '#', head);
@@ -78,6 +51,34 @@ int main(){
     
     printf("\e[?25h");
 }
+
+
+void addPixel(int x, int y, char content, struct pixel *head){
+    
+    pixel *current = head;
+    
+    while(current->next != NULL){
+        current = current->next;
+    }
+    
+    current->next = (pixel *) malloc(sizeof(pixel));
+
+    current->next->x = x;
+    current->next->y = y;
+    current->next->content = content;
+    current->next->next = NULL;   
+}
+
+void speed(struct pixel *head){
+    pixel *current = head;
+
+    while(current != NULL){
+        current->x++;
+        current = current->next;
+    }
+}
+
+
 
 void frame(struct pixel *pixels){
     
