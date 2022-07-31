@@ -89,7 +89,6 @@ void frame(struct pixel *pixels){
     
     for(int i=0; i!= lines; i++){
         for(int x=0; x!= col-1; x++){
-
             pixel *current = pixels;
             found=0;
             while(current != NULL){
