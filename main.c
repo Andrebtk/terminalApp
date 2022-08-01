@@ -25,8 +25,24 @@ void drawOnFrame(struct pixel *head);
 //printf("\e[?25l"); // disable cursor
 //printf("\e[?25h");  //  enable cursor
 
+//to implement
+/*
+void memFree(struct pixel *head){
 
+    while(head != NULL){
+        
+        free(head->x);
+        free(head->y);
 
+        free(head->movX);
+        free(head->movY);
+
+        free(head->content);
+        
+        head = head->next;
+    }
+
+}*/
 
 int main(){
     printf("\e[?25l");
@@ -42,19 +58,29 @@ int main(){
         frame(head);
         speed(head);
         
-        usleep(pow(10, 4.5));   
+        usleep(pow(10, 4));   
     }
-    
+    //memFree(head);
+
     printf("\e[?25h");
 }
 
 
 void drawOnFrame(struct pixel *head){
+
     
+    addPixel(10, 2, '#', head, 1, 0);
+    addPixel(11, 2, '#', head, 1, 0);
+    addPixel(12, 2, '#', head, 1, 0);
+
+    addPixel(10, 3, '#', head, 1, 0);
+    addPixel(11, 3, '#', head, 1, 0);
+    addPixel(12, 3, '#', head, 1, 0);
     
-    addPixel(10, 9, '#', head, 1, 0);
-    addPixel(11, 9, '#', head, 1, 0);
-    addPixel(12, 9, '#', head, 1, 0);
+    addPixel(10, 4, '#', head, 1, 0);
+    addPixel(11, 4, '#', head, 1, 0);
+    addPixel(12, 4, '#', head, 1, 0);
+
 
     addPixel(10, 10, '#', head, 1, 0);
     addPixel(11, 10, '#', head, 1, 0);
@@ -63,6 +89,25 @@ void drawOnFrame(struct pixel *head){
     addPixel(10, 11, '#', head, 1, 0);
     addPixel(11, 11, '#', head, 1, 0);
     addPixel(12, 11, '#', head, 1, 0);
+    
+    addPixel(10, 12, '#', head, 1, 0);
+    addPixel(11, 12, '#', head, 1, 0);
+    addPixel(12, 12, '#', head, 1, 0);
+
+    int col, lines;
+    termnialSize(&lines, &col);
+
+
+    //corner point
+    
+    addPixel(1, 1, 'X', head, 0, 0);
+    addPixel(1, lines, 'X', head, 0, 0);
+    addPixel(col, 1, 'X', head, 0, 0);
+    addPixel(col, lines, 'X', head, 0, 0);
+    
+    
+    
+
 }
 
 void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY){
@@ -92,34 +137,47 @@ void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY
 
 void frame(struct pixel *pixels){
     
-    int coodX, coodY = 0;
     int col, lines;
     int found = 0;
 
     termnialSize(&lines, &col);
+
     
     for(int i=0; i!= lines; i++){
-        for(int x=0; x!= col-1; x++){
+        for(int x=0; x!= col; x++){
             pixel *current = pixels;
             found=0;
+
+            
+            
             while(current != NULL){
-                if(current->x == coodX+1 && current->y == coodY+1){
+                if(current->x > col){current->x = 0;}
+
+                if(current->x == x+1 && current->y == i+1){
                     printf("%c", current->content);
                     found = 1;
                 }
                 current = current->next;
             }
+
+
+            //HOW THE FUCK IS IT WORKING
             if(found == 0 ){
                 printf(" ");
                 found = 1;
             }
-            coodX++;
+        
+            if(found == 0 ){
+                printf(" \n");
+                found = 1;
+            }
+                
+            
         }
-        printf(" \n");
-        coodX=0;
-        coodY++;
+        
     }
     fflush(stdout);
+
 }
 
 
