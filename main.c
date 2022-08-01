@@ -2,23 +2,43 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <stdlib.h>
-
+#include <math.h>
 
 typedef struct pixel{
     int x;
     int y;
+
     char content;
     struct pixel *next;
+
+    int movX;
+    int movY;
 }pixel;
 
 
 void frame(struct pixel *pixels);
 void termnialSize(int *lines, int *col);
-void addPixel(int x, int y, char content, struct pixel *head);
+void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY);
 void speed(struct pixel *head);
+void drawOnFrame(struct pixel *head);
 
 //printf("\e[?25l"); // disable cursor
 //printf("\e[?25h");  //  enable cursor
+
+
+void speed(struct pixel *head){
+    pixel *current = head;
+
+    while(current != NULL){
+        if(current->movX == 1){ current->x++; }
+        if(current->movX == -1){ current->x--; }
+
+        if(current->movY == 1){ current->y--; }
+        if(current->movY == -1){ current->y++; }
+        
+        current = current->next;
+    }
+}
 
 
 int main(){
@@ -26,33 +46,39 @@ int main(){
     
     struct pixel *head = (pixel *) malloc(sizeof(pixel));
     
-    addPixel(10, 9, '#', head);
-    addPixel(11, 9, '#', head);
-    addPixel(12, 9, '#', head);
 
-    addPixel(10, 10, '#', head);
-    addPixel(11, 10, '#', head);
-    addPixel(12, 10, '#', head);
+    drawOnFrame(head);
 
-    addPixel(10, 11, '#', head);
-    addPixel(11, 11, '#', head);
-    addPixel(12, 11, '#', head);
-    
-    
-    for(int x=0; x!=6; x++){
+    for(int x=0; x!=-1; x++){
         system("clear");
 
         frame(head);
         speed(head);
         
-        sleep(1);        
+        usleep(pow(10, 4.5));   
     }
     
     printf("\e[?25h");
 }
 
 
-void addPixel(int x, int y, char content, struct pixel *head){
+void drawOnFrame(struct pixel *head){
+    
+    
+    addPixel(10, 9, '#', head, 1, 0);
+    addPixel(11, 9, '#', head, 1, 0);
+    addPixel(12, 9, '#', head, 1, 0);
+
+    addPixel(10, 10, '#', head, 1, 0);
+    addPixel(11, 10, '#', head, 1, 0);
+    addPixel(12, 10, '#', head, 1, 0);
+
+    addPixel(10, 11, '#', head, 1, 0);
+    addPixel(11, 11, '#', head, 1, 0);
+    addPixel(12, 11, '#', head, 1, 0);
+}
+
+void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY){
     
     pixel *current = head;
     
@@ -64,18 +90,16 @@ void addPixel(int x, int y, char content, struct pixel *head){
 
     current->next->x = x;
     current->next->y = y;
+
+    current->next->movX = movX;
+    current->next->movY = movY;
+
     current->next->content = content;
+    
     current->next->next = NULL;   
 }
 
-void speed(struct pixel *head){
-    pixel *current = head;
 
-    while(current != NULL){
-        current->x++;
-        current = current->next;
-    }
-}
 
 
 
