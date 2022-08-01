@@ -17,23 +17,6 @@ typedef struct pixel{
 
 
 
-
-void drawOnFrame(struct pixel *head){
-    
-    
-    addPixel(10, 9, '#', head, 1, 0);
-    addPixel(11, 9, '#', head, 1, 0);
-    addPixel(12, 9, '#', head, 1, 0);
-
-    addPixel(10, 10, '#', head, 1, 0);
-    addPixel(11, 10, '#', head, 1, 0);
-    addPixel(12, 10, '#', head, 1, 0);
-
-    addPixel(10, 11, '#', head, 1, 0);
-    addPixel(11, 11, '#', head, 1, 0);
-    addPixel(12, 11, '#', head, 1, 0);
-}
-
 void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY){
     
     pixel *current = head;
@@ -54,6 +37,24 @@ void addPixel(int x, int y, char content, struct pixel *head, int movX, int movY
     
     current->next->next = NULL;   
 }
+
+void drawOnFrame(struct pixel *head){
+    
+    
+    addPixel(10, 9, '#', head, 1, 0);
+    addPixel(11, 9, '#', head, 1, 0);
+    addPixel(12, 9, '#', head, 1, 0);
+
+    addPixel(10, 10, '#', head, 1, 0);
+    addPixel(11, 10, '#', head, 1, 0);
+    addPixel(12, 10, '#', head, 1, 0);
+
+    addPixel(10, 11, '#', head, 1, 0);
+    addPixel(11, 11, '#', head, 1, 0);
+    addPixel(12, 11, '#', head, 1, 0);
+}
+
+
 
 void frame(struct pixel *pixels){
     
