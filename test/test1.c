@@ -5,7 +5,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "func/func.h"
+#include "../func/func.h"
 
 
 //printf("\e[?25l"); // disable cursor
@@ -14,10 +14,10 @@
 
 
 int main(){
-
+    printf("\e[?25l");
+    
     struct pixel *head = (pixel *) malloc(sizeof(pixel));
     
-    printStr("Charlotte", 15, 5, head);
 
     drawOnFrame(head);
 
@@ -37,4 +37,5 @@ int main(){
     }
     //memFree(head);
     
+    printf("\e[?25h");
 }
