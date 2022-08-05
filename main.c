@@ -17,7 +17,7 @@ int main(){
 
     struct pixel *head = (pixel *) malloc(sizeof(pixel));
     
-    printStr("Charlotte", 15, 5, head);
+    printStr("Hello there", 15, 5, head);
 
     drawOnFrame(head);
 
@@ -35,6 +35,6 @@ int main(){
         
         usleep(pow(10, 5));   
     }
-    //memFree(head);
+    free(head);
     
 }
